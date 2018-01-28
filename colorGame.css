@@ -6,14 +6,14 @@ body {
 
 .square {
 	width: 30%;
-	background: purple;
+	background-color: purple;
 	padding-bottom: 30%;
 	float: left;
 	margin: 1.66%;
 	border-radius: 15%;
-	transition: background 0.6s;
-	--webkit-transition: background 0.6s;
-	--moz-transition: background 0.6s;
+	transition: background-color 0.2s;
+	--webkit-transition: background-color 0.2s;
+	--moz-transition: background-color 0.2s;
 }
 
 #container {
@@ -40,7 +40,7 @@ h1 {
 
 .selected {
 	color: white;
-	background: steelblue;
+	background-color: steelblue;
 }
 
 #colorDisplay {
@@ -56,7 +56,7 @@ button {
 	color: steelblue;
 	letter-spacing: 1px;
 	font-size: inherit;
-	transition: all .3s;
+	transition: all 0.3s;
 	--webkit-transition: all 0.3s;
 	--moz-transition: all 0.3s;
 	outline: none;
@@ -64,7 +64,7 @@ button {
 
 button:hover {
 	color: white;
-	background: steelblue;
+	background-color: steelblue;
 }
 #message {
 	display: inline-block;

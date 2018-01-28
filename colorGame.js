@@ -1,15 +1,7 @@
 // We'll use JS to give each block a different color.
-
 var numSquares = 6;
 var colors = [];
 var pickedColor;
-var squares = document.querySelectorAll(".square");
-var colorDisplay = document.getElementById("colorDisplay");
-var messageDisplay = document.querySelector("#message");
-var h1 = document.querySelector("h1");
-var resetButton = document.querySelector("#reset");
-var modeButtons = document.querySelectorAll(".mode");
-
 init();
 
 function init() {
@@ -17,50 +9,43 @@ function init() {
 	setUpModeButtons();
 	setUpSquares();
 	reset();
-
 }
 
 function setUpModeButtons() {
-	for (var i = 0; i < modeButtons.length; i++)
-	{
-		modeButtons[i].addEventListener("click", function() {
-			modeButtons[0].classList.remove("selected");
-			modeButtons[1].classList.remove("selected");
-			this.classList.add("selected");
-			if (this.textContent === "Easy")
-				numSquares = 3;
-			else
-				numSquares= 6;
-			reset();
-		});
-	}
+	$(".mode").on("click", function() {
+		$(".mode").removeClass("selected");
+		$(this).addClass("selected");
+
+		if ($(this).text() === "Easy")
+			numSquares = 3;
+		else
+			numSquares = 6;
+		reset();
+	});
 }
+
 
 function setUpSquares() {
-	for (var i = 0; i < squares.length; i++) {
-		// add initial colors to squares
-		squares[i].style.backgroundColor = colors[i];
+	$(".square").each(function(index) {
+		$(this).css("backgroundColor", colors[index]);
 
-		//add click listeners to squares
-		squares[i].addEventListener("click", function() {
-			// grab color of clicked square
-			var clickedColor = this.style.backgroundColor;
-			//compare color to pickedColor
+		$(this).on("click", function() {
+			var clickedColor = $(this).css("backgroundColor");
+			console.log($(this).css("backgroundColor"));
 			if (clickedColor === pickedColor) {
-				messageDisplay.textContent = "Correct!";
-				resetButton.textContent = "Play Again?";
+				$("#message").text("Correct!");
+				$("#reset").text("Play Again?");
 				changeColors(clickedColor);
-				h1.style.backgroundColor = clickedColor;
+				$("h1").css("backgroundColor", clickedColor);
+				return;
 			}
 			else {
-				this.style.backgroundColor = "#232323";
-				messageDisplay.textContent = "Try Again"
+				$(this).css("backgroundColor", "#232323");
+				$("#message").text("Try Again");
 			}
-
 		});
-	}
+	});
 }
-
 
 function reset() {
 	// generate all new colors
@@ -68,39 +53,34 @@ function reset() {
 	// pick a new random color from array
 	pickedColor = pickColor();
 	// change colorDisplay to match picked color
-	colorDisplay.textContent = pickedColor; 
+	$("#colorDisplay").text(pickedColor);
 	// change colors of squares
-	for (var i = 0; i < squares.length; i++) {
-		if (colors[i]) {
-			squares[i].style.display = "block";
-			squares[i].style.backgroundColor = colors[i];
+	$(".square").each(function(index) {
+		if (colors[index]) {
+			$(this).css("display", "block");
+			$(this).css("backgroundColor", colors[index]);
 		}
 		else
-			squares[i].style.display = "none";
-	}
+			$(this).css("display", "none");
+	});
 	// reset the header
-	h1.style.backgroundColor = "steelblue"
+	$("h1").css("backgroundColor", "steelblue");
 	// change play again
-	resetButton.textContent = "New Colors";
-	messageDisplay.textContent = "";
+	$("#reset").text("New Colors");
+	$("#message").text("");
 }
 
-resetButton.addEventListener("click", function() {
+$("#reset").on("click", function() {
 	reset();
 });
 
 function changeColors(color) {
 	//loop through all squares
-
-	for (var i = 0; i < squares.length; i++) {
-		//change each color to match the given color
-		squares[i].style.backgroundColor = color;
-	}
+	$(".square").css("backgroundColor", color);
 }
 
 function pickColor() {
 	var random = Math.floor(Math.random() * colors.length);
-
 	return colors[random];
 }
 
